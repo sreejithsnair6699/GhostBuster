@@ -21,6 +21,10 @@ module objects {
             this.x = x;
             this.y = y;
 
+            
+            this.scaleX = 2;
+            this.scaleY = 2;
+
             // event listeners
             this.on("mouseover", this._over);
             this.on("mouseout", this._out);
@@ -34,7 +38,7 @@ module objects {
         }
 
         private _out(event:createjs.MouseEvent):void {
-            this.alpha = 1.0 // 100% opacity
+            this.alpha = 1.0; // 100% opacity
         }
 
         // public methods
@@ -43,7 +47,6 @@ module objects {
         }
 
         public Start(): void {
-
         }
 
         public Update(): void {

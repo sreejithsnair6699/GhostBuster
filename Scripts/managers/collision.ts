@@ -33,28 +33,7 @@ module managers {
                             Collision.createExplosion(object1);
                             
 
-                        break;
-                        case "enemy":
-                            if(object1.name == "bullet") {
-                                    let explosionSound = createjs.Sound.play("explosionSound");
-                                    explosionSound.volume = 0.1;
-                                    managers.Game.scoreBoard.Score += 100;
-                                    Collision.createExplosion(object2);
-                                    object2.Reset();
-                                    object1.Reset();
-                                    console.log("enemy hit by bullet"); 
-                            }
-                            else
-                            {
-                                let explosionSound = createjs.Sound.play("explosionSound");
-                                explosionSound.volume = 0.1;
-                                managers.Game.scoreBoard.Lives -=1;
-                                Collision.createExplosion(object1);
-                            }
-                            
-
-
-                        break;
+                        break;   
 
                         case "bullet":
                             let explosionSound = createjs.Sound.play("explosionSound");
@@ -76,6 +55,35 @@ module managers {
             }
 
 
+        }
+
+        public static CheckEnemyCollision(object1: objects.SpriteGameObject, object2: objects.SpriteGameObject[]): void {
+                object2.forEach(enemy => {
+                if(!enemy.IsColliding){
+                    let distance = util.Vector2.Distance(object1.Position, enemy.Position);
+                    let totalHeight = object1.HalfHeight + enemy.HalfHeight;
+                    // check if object 1 is colliding with object 2
+                    if (distance < totalHeight) {
+                        enemy.IsColliding = true;
+
+                        if(object1.name == "bullet") {
+                            let explosionSound = createjs.Sound.play("explosionSound");
+                            explosionSound.volume = 0.1;
+                            managers.Game.scoreBoard.Score += 100;
+                            Collision.createExplosion(enemy);
+                            enemy.Reset();
+                            object1.Reset();
+                            console.log("enemy hit by bullet"); 
+                        }
+                        else {
+                            let explosionSound = createjs.Sound.play("explosionSound");
+                            explosionSound.volume = 0.1;
+                            managers.Game.scoreBoard.Lives -=1;
+                            Collision.createExplosion(object1);
+                        }
+                    }
+                }
+              });
         }
 
         private static createExplosion(object1: objects.SpriteGameObject) {

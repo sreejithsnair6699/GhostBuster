@@ -43,7 +43,7 @@ module objects {
         }
 
         private _checkBounds(): any {
-            if((this.y > (480 + this.HalfHeight)) || (this.y < -this.HalfHeight)) {
+            if((this.y > (800 + this.HalfHeight)) || (this.y < -this.HalfHeight)) {
                 this.IsInPlay = false;
                 this.Reset();
             }

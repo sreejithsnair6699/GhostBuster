@@ -54,7 +54,7 @@ var objects;
             this.y = this.Position.y;
         };
         Bullet.prototype._checkBounds = function () {
-            if ((this.y > (480 + this.HalfHeight)) || (this.y < -this.HalfHeight)) {
+            if ((this.y > (800 + this.HalfHeight)) || (this.y < -this.HalfHeight)) {
                 this.IsInPlay = false;
                 this.Reset();
             }

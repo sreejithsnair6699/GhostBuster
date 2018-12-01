@@ -1,4 +1,4 @@
-body {
+/* body {
     background-color: lightgrey;
     margin: 0 0;
 }
@@ -14,4 +14,8 @@ body {
 
 #game {
     margin-left: 18vw;
+} */
+
+#canvas {
+    border: 1px black dotted;
 }

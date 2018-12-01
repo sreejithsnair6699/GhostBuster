@@ -25,21 +25,23 @@ var objects;
         // private methods
         Enemy.prototype._move = function () {
             this.y += this._verticalSpeed;
+            this.x += this._horizontalSpeed;
             this._updatePosition();
         };
         Enemy.prototype._checkBounds = function () {
-            if (this.y > 480 + this.Height) {
+            if (this.y > 800 + this.Height) {
                 this.Reset();
             }
-            if ((createjs.Ticker.getTicks() % 20 == 0) && (this.y > 0)) {
+            if (((createjs.Ticker.getTicks() * 2) % 60 == 0) && (this.y > 0)) {
                 managers.Game.bulletManager.FireBullet(util.Vector2.Add(this.Position, this._bulletSpawn), util.Vector2.down());
             }
         };
         // public methods
         Enemy.prototype.Reset = function () {
-            this._verticalSpeed = Math.floor((Math.random() * 2) + 6);
-            this.y = -this.Height * 20; // Math.floor((Math.random() * 10) + 5);
-            this.x = Math.floor((Math.random() * (640 - this.Width)) + this.HalfWidth);
+            this._verticalSpeed = Math.floor((Math.random() * 2) + 2);
+            this._horizontalSpeed = Math.floor((Math.random() * 4) - 2);
+            this.y = -this.Height * Math.floor((Math.random() * 10) + 5);
+            this.x = Math.floor((Math.random() * (1500 - this.Width)) + this.HalfWidth);
             this.IsColliding = false;
         };
         Enemy.prototype.Start = function () {

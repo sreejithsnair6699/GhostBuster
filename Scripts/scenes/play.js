@@ -25,10 +25,12 @@ var scenes;
         // private methods
         // public methods
         Play.prototype.Start = function () {
-            this._cloudNum = 3;
+            this._cloudNum = 0;
+            this._enemyNum = 8;
+            this._background = new objects.Background("skybackground");
             this._ocean = new objects.Ocean();
             this._island = new objects.Island();
-            this._enemy = new objects.Enemy();
+            this._enemy = new Array();
             this._player = new objects.Player();
             managers.Game.player = this._player;
             // Instantiates a new Array container of Type objects.Cloud
@@ -36,6 +38,9 @@ var scenes;
             // Fill the Cloud Array with Clouds
             for (var count = 0; count < this._cloudNum; count++) {
                 this._clouds[count] = new objects.Cloud();
+            }
+            for (var count = 0; count < this._enemyNum; count++) {
+                this._enemy[count] = new objects.Enemy();
             }
             // play background engine sound when the level starts
             this._engineSound = createjs.Sound.play("engineSound");
@@ -61,18 +66,20 @@ var scenes;
             this._player.Update();
             this._island.Update();
             // check if player and island are colliding
-            managers.Collision.Check(this._player, this._island.Coin);
+            //managers.Collision.Check(this._player, this._island.Coin);
             // Update Each cloud in the Cloud Array
-            this._clouds.forEach(function (cloud) {
-                cloud.Update();
-                managers.Collision.Check(_this._player, cloud);
+            // this._clouds.forEach(cloud => {
+            //   cloud.Update();
+            //   managers.Collision.Check(this._player, cloud);
+            // });
+            this._enemy.forEach(function (enemy) {
+                enemy.Update();
+                managers.Collision.Check(_this._player, enemy);
             });
-            this._enemy.Update();
-            managers.Collision.Check(this._player, this._enemy);
             this._bulletManager.Update();
             this._bulletManager.Bullets.forEach(function (bullet) {
                 managers.Collision.Check(_this._player, bullet);
-                managers.Collision.Check(bullet, _this._enemy);
+                managers.Collision.CheckEnemyCollision(bullet, _this._enemy);
             });
         };
         Play.prototype.Destroy = function () {
@@ -85,10 +92,13 @@ var scenes;
             var _this = this;
             // adds ocean to the scene
             this.addChild(this._ocean);
+            this.addChild(this._background);
             // adds island to the scene
-            this.addChild(this._island);
-            this.addChild(this._island.Coin);
-            this.addChild(this._enemy);
+            //this.addChild(this._island);
+            //this.addChild(this._island.Coin);
+            this._enemy.forEach(function (enemy) {
+                _this.addChild(enemy);
+            });
             // adds player to the scene
             this.addChild(this._player);
             // adds bullets to the scene

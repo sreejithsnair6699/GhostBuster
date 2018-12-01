@@ -18,26 +18,32 @@ var objects;
         // public properties
         // constructor
         function Ocean() {
-            var _this = _super.call(this, "ocean") || this;
+            var _this = _super.call(this, "cloud") || this;
             _this.Start();
             return _this;
         }
         // private methods
         Ocean.prototype._checkBounds = function () {
-            if (this.y >= 0) {
+            if (this.y >= 800) {
                 this.Reset();
             }
         };
         Ocean.prototype._move = function () {
             this.y += this.verticalSpeed;
+            this.x += this.horizontalSpeed;
         };
         // public methods
         Ocean.prototype.Reset = function () {
             this.y = -960;
+            this.x = Math.floor((Math.random() * 1000) - this.HalfWidth);
         };
         Ocean.prototype.Start = function () {
             this.Reset();
-            this.verticalSpeed = 5; // 5 px per frame
+            this.alpha = .15;
+            this.scaleX = 1.5;
+            this.scaleY = 1.5;
+            this.verticalSpeed = Math.floor((Math.random() * 5) + 5);
+            this.horizontalSpeed = Math.floor((Math.random() * 3) + 3);
         };
         Ocean.prototype.Update = function () {
             this._move();

@@ -4,11 +4,13 @@ namespace scenes {
     private _player: objects.Player;
     private _ocean: objects.Ocean;
     private _island: objects.Island;
+    private _background:objects.Background;
 
     private _cloudNum: number;
     private _clouds: objects.Cloud[];
 
-    private _enemy: objects.Enemy;
+    private _enemyNum: number;
+    private _enemy: objects.Enemy[];
 
     private _engineSound: createjs.AbstractSoundInstance;
 
@@ -30,13 +32,15 @@ namespace scenes {
     // public methods
 
     public Start(): void {
-      this._cloudNum = 3;
+      this._cloudNum = 0;
+      this._enemyNum = 8;
 
+      this._background = new objects.Background("skybackground");
       this._ocean = new objects.Ocean();
 
       this._island = new objects.Island();
 
-      this._enemy = new objects.Enemy();
+      this._enemy =  new Array<objects.Enemy>();
 
       this._player = new objects.Player();
       managers.Game.player = this._player;
@@ -48,6 +52,11 @@ namespace scenes {
       for (let count = 0; count < this._cloudNum; count++) {
         this._clouds[count] = new objects.Cloud();
       }
+
+      for (let count = 0; count < this._enemyNum; count++) {
+        this._enemy[count] = new objects.Enemy();
+      }
+
 
       // play background engine sound when the level starts
       this._engineSound = createjs.Sound.play("engineSound");
@@ -79,22 +88,26 @@ namespace scenes {
       this._island.Update();
 
       // check if player and island are colliding
-      managers.Collision.Check(this._player, this._island.Coin);
+      //managers.Collision.Check(this._player, this._island.Coin);
 
       // Update Each cloud in the Cloud Array
-      this._clouds.forEach(cloud => {
-        cloud.Update();
-        managers.Collision.Check(this._player, cloud);
-      });
+      // this._clouds.forEach(cloud => {
+      //   cloud.Update();
+      //   managers.Collision.Check(this._player, cloud);
+      // });
 
-      this._enemy.Update();
-      managers.Collision.Check(this._player, this._enemy);
+      this._enemy.forEach(enemy => {
+        enemy.Update();
+        managers.Collision.Check(this._player, enemy);
+        
+      });
 
       this._bulletManager.Update();
-      this._bulletManager.Bullets.forEach(bullet => {
-        managers.Collision.Check(this._player, bullet);
-        managers.Collision.Check(bullet, this._enemy);
-      });
+        this._bulletManager.Bullets.forEach(bullet => {
+          managers.Collision.Check(this._player, bullet);
+          managers.Collision.CheckEnemyCollision(bullet, this._enemy);
+        });
+      
     }
 
     public Destroy(): void {
@@ -108,12 +121,16 @@ namespace scenes {
     public Main(): void {
       // adds ocean to the scene
       this.addChild(this._ocean);
+      this.addChild(this._background);
 
       // adds island to the scene
-      this.addChild(this._island);
-      this.addChild(this._island.Coin);
+      //this.addChild(this._island);
+      //this.addChild(this._island.Coin);
 
-      this.addChild(this._enemy);
+      this._enemy.forEach(enemy => {
+        this.addChild(enemy);
+      });
+      
 
       // adds player to the scene
       this.addChild(this._player);

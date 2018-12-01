@@ -28,23 +28,6 @@ var managers;
                             managers.Game.scoreBoard.Lives -= 1;
                             Collision.createExplosion(object1);
                             break;
-                        case "enemy":
-                            if (object1.name == "bullet") {
-                                var explosionSound_1 = createjs.Sound.play("explosionSound");
-                                explosionSound_1.volume = 0.1;
-                                managers.Game.scoreBoard.Score += 100;
-                                Collision.createExplosion(object2);
-                                object2.Reset();
-                                object1.Reset();
-                                console.log("enemy hit by bullet");
-                            }
-                            else {
-                                var explosionSound_2 = createjs.Sound.play("explosionSound");
-                                explosionSound_2.volume = 0.1;
-                                managers.Game.scoreBoard.Lives -= 1;
-                                Collision.createExplosion(object1);
-                            }
-                            break;
                         case "bullet":
                             var explosionSound = createjs.Sound.play("explosionSound");
                             explosionSound.volume = 0.1;
@@ -61,6 +44,33 @@ var managers;
                     }
                 }
             }
+        };
+        Collision.CheckEnemyCollision = function (object1, object2) {
+            object2.forEach(function (enemy) {
+                if (!enemy.IsColliding) {
+                    var distance = util.Vector2.Distance(object1.Position, enemy.Position);
+                    var totalHeight = object1.HalfHeight + enemy.HalfHeight;
+                    // check if object 1 is colliding with object 2
+                    if (distance < totalHeight) {
+                        enemy.IsColliding = true;
+                        if (object1.name == "bullet") {
+                            var explosionSound = createjs.Sound.play("explosionSound");
+                            explosionSound.volume = 0.1;
+                            managers.Game.scoreBoard.Score += 100;
+                            Collision.createExplosion(enemy);
+                            enemy.Reset();
+                            object1.Reset();
+                            console.log("enemy hit by bullet");
+                        }
+                        else {
+                            var explosionSound = createjs.Sound.play("explosionSound");
+                            explosionSound.volume = 0.1;
+                            managers.Game.scoreBoard.Lives -= 1;
+                            Collision.createExplosion(object1);
+                        }
+                    }
+                }
+            });
         };
         Collision.createExplosion = function (object1) {
             var newExplosion = new objects.Explosion();

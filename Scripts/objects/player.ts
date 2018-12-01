@@ -36,8 +36,16 @@ module objects {
             this.BulletSpawn = new util.Vector2(this.x - 6, this.y - this.HalfHeight - 2);
 
             // checks the right boundary
-            if(this.x > 640 - this.HalfWidth) {
-                this.x = 640 - this.HalfWidth;
+            if(this.x > 1500 - this.HalfWidth) {
+                this.x = 1500 - this.HalfWidth;
+            }
+
+            if(this.y > 800 - this.HalfHeight) {
+                this.y = 800 - this.HalfHeight;
+            }
+
+            if(this.y <0 - this.HalfWidth) {
+                this.y = this.HalfWidth;
             }
 
             // check the left boundary
@@ -49,19 +57,23 @@ module objects {
         public Move():void {
             // this.x = managers.Game.stage.mouseX;
 
-            let direction = (this.rotation -90) * -1;
-            let degToRad = Math.PI / 180.0;
-
-
-            // standard movement for top scroller - left and right
             
-            if(managers.Input.moveRight) {
-                this.x += 10;
-            }
+            this.x = managers.Game.stage.mouseX;
+            this.y = managers.Game.stage.mouseY;
 
-            if(managers.Input.moveLeft) {
-                this.x -= 10;
-            }
+            // let direction = (this.rotation -90) * -1;
+            // let degToRad = Math.PI / 180.0;
+
+
+            // // standard movement for top scroller - left and right
+            
+            // if(managers.Input.moveRight) {
+            //     this.x += 10;
+            // }
+
+            // if(managers.Input.moveLeft) {
+            //     this.x -= 10;
+            // }
             
 
             /*
