@@ -25,13 +25,14 @@ var scenes;
         // private methods
         // public methods
         Over.prototype.Start = function () {
-            this._background = new objects.Background("skybackground");
+            this._background = new objects.Background();
             this._ocean = new objects.Ocean();
-            this._gameOverLabel = new objects.Label("Game Over", "60px", "Consolas", "#FFFF00", 750, 400, true);
+            this._gameOverLabel = new objects.Label("Game Over", "60px", "Courier", "#FF0000", 750, 400, true);
             this._restartButton = new objects.Button("restartButton", 750, 520, true);
             this.Main();
         };
         Over.prototype.Update = function () {
+            this._background.Update();
             this._ocean.Update();
         };
         Over.prototype.Destroy = function () {

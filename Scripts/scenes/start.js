@@ -25,13 +25,17 @@ var scenes;
         // private methods
         // public methods
         Start.prototype.Start = function () {
-            this._background = new objects.Background("skybackground");
+            this._background = new objects.Background();
+            this._overbackground = new objects.OverlayBackground("background");
             this._ocean = new objects.Ocean();
-            this._welcomeLabel = new objects.Label("Mail Pilot", "60px", "Consolas", "#FFFF00", 750, 400, true);
-            this._startButton = new objects.Button("startButton", 750, 520, true);
+            this._startButton = new objects.Button("startButton", 450, 650, true);
+            this._backgroundSound = createjs.Sound.play("backgroundSound");
+            this._backgroundSound.volume = 0.05;
+            this._backgroundSound.loop = -1;
             this.Main();
         };
         Start.prototype.Update = function () {
+            this._background.Update();
             this._ocean.Update();
         };
         Start.prototype.Destroy = function () {
@@ -42,6 +46,7 @@ var scenes;
         Start.prototype.Main = function () {
             // adds ocean to the stage
             this.addChild(this._background);
+            this.addChild(this._overbackground);
             this.addChild(this._ocean);
             this.addChild(this._welcomeLabel);
             this.addChild(this._startButton);

@@ -21,13 +21,13 @@ namespace scenes {
 
     public Start(): void {
 
-      this._background = new objects.Background("skybackground");
+      this._background = new objects.Background();
       this._ocean = new objects.Ocean();
       this._gameOverLabel = new objects.Label(
         "Game Over",
         "60px",
-        "Consolas",
-        "#FFFF00",
+        "Courier",
+        "#FF0000",
         750,
         400,
         true
@@ -38,6 +38,7 @@ namespace scenes {
     }
 
     public Update(): void {
+      this._background.Update();
       this._ocean.Update();
     }
 

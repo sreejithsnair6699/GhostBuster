@@ -17,8 +17,12 @@ var objects;
         __extends(Explosion, _super);
         // public properties
         // constructor
-        function Explosion() {
-            var _this = _super.call(this, "explosion") || this;
+        function Explosion(flag) {
+            var _this = this;
+            if (flag == 1)
+                _this = _super.call(this, "playerexplosion") || this;
+            else
+                _this = _super.call(this, "explosion") || this;
             _this.Start();
             return _this;
         }

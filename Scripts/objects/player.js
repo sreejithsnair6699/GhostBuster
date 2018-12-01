@@ -37,8 +37,8 @@ var objects;
         Player.prototype.Start = function () {
             this.regX = this.HalfWidth;
             this.regY = this.HalfHeight;
-            this.y = 435;
-            this.x = 320;
+            this.y = 700;
+            this.x = 750;
         };
         Player.prototype.Update = function () {
             this.Move();

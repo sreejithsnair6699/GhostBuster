@@ -12,12 +12,15 @@
         { id: "ocean", src: "./Assets/images/ocean.gif" },
         { id: "cloud", src: "./Assets/images/cloud.png" },
         { id: "skybackground", src: "./Assets/images/skybackground.jpg" },
+        { id: "background", src: "./Assets/images/background.png" },
         { id: "textureMap", src: "./Assets/sprites/texturemap.png" },
-        { id: "engineSound", src: "./Assets/audio/engine.ogg" },
+        { id: "engineSound", src: "./Assets/audio/engine.mp3" },
         { id: "thunderSound", src: "./Assets/audio/thunder.ogg" },
+        { id: "backgroundSound", src: "./Assets/audio/spaceinvaders1.mp3" },
         { id: "yaySound", src: "./Assets/audio/yay.ogg" },
-        { id: "bulletSound", src: "./Assets/audio/bullet.mp3" },
-        { id: "explosionSound", src: "./Assets/audio/explosion.mp3" }
+        { id: "bulletSound", src: "./Assets/audio/shoot.wav" },
+        { id: "explosionSound", src: "./Assets/audio/enemyexplode.mp3" },
+        { id: "playerExplosionSound", src: "./Assets/audio/playerexplode.mp3" }
     ];
     function Init() {
         assetManager = new createjs.LoadQueue();
@@ -63,6 +66,7 @@
             ],
             animations: {
                 bullet: { frames: [7] },
+                playerbullet: { frames: [16] },
                 cloud: { frames: [4] },
                 coin: {
                     frames: [5, 6],
@@ -75,6 +79,14 @@
                 explosion: {
                     frames: [8, 9, 10, 11, 12],
                     speed: 0.2
+                },
+                playerexplosion: {
+                    frames: [17, 18, 19, 20, 21],
+                    speed: 0.5
+                },
+                playerlifegone: {
+                    frames: [11, 12],
+                    speed: 0.5
                 },
                 island: { frames: [13] },
                 plane: {

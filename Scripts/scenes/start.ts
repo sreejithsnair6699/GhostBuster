@@ -5,6 +5,8 @@ module scenes {
          private _ocean:objects.Ocean;
          private _startButton:objects.Button;
          private _background:objects.Background;
+         private _overbackground:objects.OverlayBackground;
+         private _backgroundSound:createjs.AbstractSoundInstance;
 
         // public properties
 
@@ -20,16 +22,21 @@ module scenes {
         // public methods
 
         public Start(): void {
-            this._background = new objects.Background("skybackground");
+            this._background = new objects.Background();
+            this._overbackground = new objects.OverlayBackground("background");
 
             this._ocean = new objects.Ocean();
-            this._welcomeLabel = new objects.Label("Mail Pilot", "60px", "Consolas", "#FFFF00", 750, 400, true);
-            this._startButton = new objects.Button("startButton", 750, 520, true);
+            this._startButton = new objects.Button("startButton", 450, 650, true);
+
+            this._backgroundSound = createjs.Sound.play("backgroundSound");
+            this._backgroundSound.volume = 0.05;
+            this._backgroundSound.loop = -1;
 
             this.Main();
         }        
         
         public Update(): void {
+            this._background.Update();
             this._ocean.Update();
         }
         
@@ -44,6 +51,7 @@ module scenes {
         public Main(): void {
             // adds ocean to the stage
         this.addChild(this._background);
+        this.addChild(this._overbackground);
         
         this.addChild(this._ocean);
 

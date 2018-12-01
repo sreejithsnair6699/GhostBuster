@@ -34,8 +34,8 @@ var objects;
             }
             _this.x = x;
             _this.y = y;
-            _this.scaleX = 2;
-            _this.scaleY = 2;
+            _this.scaleX = 3;
+            _this.scaleY = 3;
             // event listeners
             _this.on("mouseover", _this._over);
             _this.on("mouseout", _this._out);

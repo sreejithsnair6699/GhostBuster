@@ -33,9 +33,9 @@ namespace scenes {
 
     public Start(): void {
       this._cloudNum = 0;
-      this._enemyNum = 8;
+      this._enemyNum = 9;
 
-      this._background = new objects.Background("skybackground");
+      this._background = new objects.Background();
       this._ocean = new objects.Ocean();
 
       this._island = new objects.Island();
@@ -60,7 +60,7 @@ namespace scenes {
 
       // play background engine sound when the level starts
       this._engineSound = createjs.Sound.play("engineSound");
-      this._engineSound.volume = 0.1;
+      this._engineSound.volume = 0.05;
       this._engineSound.loop = -1; // loop forever
 
       // instantiates a new bullet manager
@@ -80,9 +80,10 @@ namespace scenes {
     public Update(): void {
       managers.Input.gamepad1.Update();
       if((managers.Input.gamepad1.Buttons[0]) && (createjs.Ticker.getTicks() % 7 == 0)) {
-        managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up());
+        managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up(),0);
       }
 
+      this._background.Update();
       this._ocean.Update();
       this._player.Update();
       this._island.Update();
@@ -120,8 +121,8 @@ namespace scenes {
 
     public Main(): void {
       // adds ocean to the scene
-      this.addChild(this._ocean);
       this.addChild(this._background);
+      this.addChild(this._ocean);
 
       // adds island to the scene
       //this.addChild(this._island);

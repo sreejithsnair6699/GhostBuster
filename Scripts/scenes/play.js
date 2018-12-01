@@ -26,8 +26,8 @@ var scenes;
         // public methods
         Play.prototype.Start = function () {
             this._cloudNum = 0;
-            this._enemyNum = 8;
-            this._background = new objects.Background("skybackground");
+            this._enemyNum = 9;
+            this._background = new objects.Background();
             this._ocean = new objects.Ocean();
             this._island = new objects.Island();
             this._enemy = new Array();
@@ -44,7 +44,7 @@ var scenes;
             }
             // play background engine sound when the level starts
             this._engineSound = createjs.Sound.play("engineSound");
-            this._engineSound.volume = 0.1;
+            this._engineSound.volume = 0.05;
             this._engineSound.loop = -1; // loop forever
             // instantiates a new bullet manager
             this._bulletManager = new managers.Bullet();
@@ -60,8 +60,9 @@ var scenes;
             var _this = this;
             managers.Input.gamepad1.Update();
             if ((managers.Input.gamepad1.Buttons[0]) && (createjs.Ticker.getTicks() % 7 == 0)) {
-                managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up());
+                managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up(), 0);
             }
+            this._background.Update();
             this._ocean.Update();
             this._player.Update();
             this._island.Update();
@@ -91,8 +92,8 @@ var scenes;
         Play.prototype.Main = function () {
             var _this = this;
             // adds ocean to the scene
-            this.addChild(this._ocean);
             this.addChild(this._background);
+            this.addChild(this._ocean);
             // adds island to the scene
             //this.addChild(this._island);
             //this.addChild(this._island.Coin);

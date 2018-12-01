@@ -1,77 +1,62 @@
-module objects{
-    export class Background extends createjs.Bitmap{
+module objects {
+    export class Background extends objects.BitmapGameObject {
         // private instance variables
-        private _width:number;
-        private _height:number;
-        private _halfWidth:number;
-        private _halfHeight:number;
+        private verticalSpeed:number;
+        private flag:number;
 
         // public properties
-        get Width():number{
-            return this._width;
-        }
-
-        set Width(newValue:number){
-            this._width = newValue;
-            this.HalfWidth = this._width * 0.5;
-        }
-
-        get Height():number{
-            return this._height;
-        }
-
-        set Height(newValue:number){
-            this._height = newValue;
-            this.HalfHeight = this._height * 0.5;
-        }
-
-        get HalfWidth():number{
-            return this._halfWidth;
-        }
-
-        set HalfWidth(newValue:number){
-            this._halfWidth = newValue;
-        }
-
-        get HalfHeight():number{
-            return this._halfHeight;
-        }
-
-        set HalfHeight(newValue:number){
-            this._halfHeight = newValue;
-        }
 
         // constructor
-       /**
-        *Creates an instance of Button.
-        * @param {string} imageString
-        * @param {number} [x=0]
-        * @param {number} [y=0]
-        * @param {boolean} [isCentered=false]
-        */
-       constructor(imageString:string, x:number = 0, y:number = 0, isCentered:boolean = false){
-            super(managers.Game.assetManager.getResult(imageString));
+        constructor() {
+            super("skybackground");
+            this.flag = 0;
 
-            this.Width = this.getBounds().width;
-            this.Height = this.getBounds().height;
-
-            if(isCentered){
-                this.regX = this.HalfWidth;
-                this.regY = this.HalfHeight;
-            }
-
-            this.x = x;
-            this.y = y;
-
+            this.Start();
         }
 
-
         // private methods
-        
-        // event handlers
+        private _checkBounds():void {
+            if(this.y >=0) {
+                if(this.flag == 0){
+                    this.scaleY = -1;
+                    this.scaleX = -1;
+                    this.rotation = 180;
+                    this.flag = 1;
+                }  
+                if(this.flag == 1){
+                    this.scaleY = 1;
+                    this.scaleX = 1;
+                    this.rotation = 360;
+                    this.flag = 0;
+                }  
+                this.Reset();             
+            }
+        }
+
+        private _move():void {
+            this.y += this.verticalSpeed;
+        }
 
         // public methods
 
+        public Reset(): void {
+            this.y = -1000;
+
+        }        
+        
+        public Start(): void {
+            this.Reset();
+            this.verticalSpeed = 12;
+        }
+
+        public Update(): void {
+            this._move();
+            this._checkBounds();
+        }
+
+        public Destroy(): void {
+            
+        }
 
     }
 }

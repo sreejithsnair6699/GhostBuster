@@ -7,7 +7,7 @@ module managers {
         public static moveLeft: boolean = false;
         public static moveRight: boolean = false;
         public static enabled: boolean = true;
-        public static gamepad1: managers.GamePad;
+        public static gamepad1: managers.GamePad;   
 
         public static Start() {
             this.enabled = true;
@@ -25,8 +25,8 @@ module managers {
 
         public static OnLeftMouseDown(event) {
             if(event.nativeEvent.button == 0) {
-                managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up());
-              }
+                managers.Game.bulletManager.FireBullet(managers.Game.player.BulletSpawn, util.Vector2.up(), 1);
+            }
         }
 
         public static onKeyDown(event: KeyboardEvent):void {

@@ -26,14 +26,14 @@ var managers;
                             var thunderSound = createjs.Sound.play("thunderSound");
                             thunderSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -= 1;
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 0);
                             break;
                         case "bullet":
-                            var explosionSound = createjs.Sound.play("explosionSound");
+                            var explosionSound = createjs.Sound.play("playerExplosionSound");
                             explosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -= 1;
                             object2.Reset();
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 1);
                             break;
                     }
                     if (managers.Game.scoreBoard.Lives <= 0) {
@@ -57,7 +57,7 @@ var managers;
                             var explosionSound = createjs.Sound.play("explosionSound");
                             explosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Score += 100;
-                            Collision.createExplosion(enemy);
+                            Collision.createExplosion(enemy, 0);
                             enemy.Reset();
                             object1.Reset();
                             console.log("enemy hit by bullet");
@@ -65,15 +65,17 @@ var managers;
                         else {
                             var explosionSound = createjs.Sound.play("explosionSound");
                             explosionSound.volume = 0.1;
+                            var pexplosionSound = createjs.Sound.play("playerExplosionSound");
+                            pexplosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -= 1;
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 0);
                         }
                     }
                 }
             });
         };
-        Collision.createExplosion = function (object1) {
-            var newExplosion = new objects.Explosion();
+        Collision.createExplosion = function (object1, flag) {
+            var newExplosion = new objects.Explosion(flag);
             newExplosion.x = object1.x;
             newExplosion.y = object1.y;
             managers.Game.currentScene.addChild(newExplosion);

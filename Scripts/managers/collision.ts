@@ -30,18 +30,18 @@ module managers {
                             thunderSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -= 1;
 
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 0);
                             
 
                         break;   
 
                         case "bullet":
-                            let explosionSound = createjs.Sound.play("explosionSound");
+                            let explosionSound = createjs.Sound.play("playerExplosionSound");
                             explosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -=1;
                             object2.Reset();
 
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 1);
                         break;
                     }
 
@@ -70,7 +70,7 @@ module managers {
                             let explosionSound = createjs.Sound.play("explosionSound");
                             explosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Score += 100;
-                            Collision.createExplosion(enemy);
+                            Collision.createExplosion(enemy, 0);
                             enemy.Reset();
                             object1.Reset();
                             console.log("enemy hit by bullet"); 
@@ -78,16 +78,18 @@ module managers {
                         else {
                             let explosionSound = createjs.Sound.play("explosionSound");
                             explosionSound.volume = 0.1;
+                            let pexplosionSound = createjs.Sound.play("playerExplosionSound");
+                            pexplosionSound.volume = 0.1;
                             managers.Game.scoreBoard.Lives -=1;
-                            Collision.createExplosion(object1);
+                            Collision.createExplosion(object1, 0);
                         }
                     }
                 }
               });
         }
 
-        private static createExplosion(object1: objects.SpriteGameObject) {
-            let newExplosion = new objects.Explosion();
+        private static createExplosion(object1: objects.SpriteGameObject, flag:number) {
+            let newExplosion = new objects.Explosion(flag);
             newExplosion.x = object1.x;
             newExplosion.y = object1.y;
             managers.Game.currentScene.addChild(newExplosion);

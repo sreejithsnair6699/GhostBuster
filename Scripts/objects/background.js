@@ -15,74 +15,51 @@ var objects;
 (function (objects) {
     var Background = /** @class */ (function (_super) {
         __extends(Background, _super);
+        // public properties
         // constructor
-        /**
-         *Creates an instance of Button.
-         * @param {string} imageString
-         * @param {number} [x=0]
-         * @param {number} [y=0]
-         * @param {boolean} [isCentered=false]
-         */
-        function Background(imageString, x, y, isCentered) {
-            if (x === void 0) { x = 0; }
-            if (y === void 0) { y = 0; }
-            if (isCentered === void 0) { isCentered = false; }
-            var _this = _super.call(this, managers.Game.assetManager.getResult(imageString)) || this;
-            _this.Width = _this.getBounds().width;
-            _this.Height = _this.getBounds().height;
-            if (isCentered) {
-                _this.regX = _this.HalfWidth;
-                _this.regY = _this.HalfHeight;
-            }
-            _this.x = x;
-            _this.y = y;
+        function Background() {
+            var _this = _super.call(this, "skybackground") || this;
+            _this.flag = 0;
+            _this.Start();
             return _this;
         }
-        Object.defineProperty(Background.prototype, "Width", {
-            // public properties
-            get: function () {
-                return this._width;
-            },
-            set: function (newValue) {
-                this._width = newValue;
-                this.HalfWidth = this._width * 0.5;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Background.prototype, "Height", {
-            get: function () {
-                return this._height;
-            },
-            set: function (newValue) {
-                this._height = newValue;
-                this.HalfHeight = this._height * 0.5;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Background.prototype, "HalfWidth", {
-            get: function () {
-                return this._halfWidth;
-            },
-            set: function (newValue) {
-                this._halfWidth = newValue;
-            },
-            enumerable: true,
-            configurable: true
-        });
-        Object.defineProperty(Background.prototype, "HalfHeight", {
-            get: function () {
-                return this._halfHeight;
-            },
-            set: function (newValue) {
-                this._halfHeight = newValue;
-            },
-            enumerable: true,
-            configurable: true
-        });
+        // private methods
+        Background.prototype._checkBounds = function () {
+            if (this.y >= 0) {
+                if (this.flag == 0) {
+                    this.scaleY = -1;
+                    this.scaleX = -1;
+                    this.rotation = 180;
+                    this.flag = 1;
+                }
+                if (this.flag == 1) {
+                    this.scaleY = 1;
+                    this.scaleX = 1;
+                    this.rotation = 360;
+                    this.flag = 0;
+                }
+                this.Reset();
+            }
+        };
+        Background.prototype._move = function () {
+            this.y += this.verticalSpeed;
+        };
+        // public methods
+        Background.prototype.Reset = function () {
+            this.y = -1000;
+        };
+        Background.prototype.Start = function () {
+            this.Reset();
+            this.verticalSpeed = 12;
+        };
+        Background.prototype.Update = function () {
+            this._move();
+            this._checkBounds();
+        };
+        Background.prototype.Destroy = function () {
+        };
         return Background;
-    }(createjs.Bitmap));
+    }(objects.BitmapGameObject));
     objects.Background = Background;
 })(objects || (objects = {}));
 //# sourceMappingURL=background.js.map

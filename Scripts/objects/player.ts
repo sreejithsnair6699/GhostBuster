@@ -26,8 +26,8 @@ module objects {
             this.regX = this.HalfWidth;
             this.regY = this.HalfHeight;
 
-            this.y = 435;
-            this.x = 320;
+            this.y = 700;
+            this.x = 750;
         }
 
         public Update():void {

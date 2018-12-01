@@ -4,7 +4,10 @@ module objects {
         // public properties
 
         // constructor
-        constructor() {
+        constructor(flag:number) {
+            if(flag == 1)
+                super("playerexplosion");
+            else
             super("explosion");
 
             this.Start();
